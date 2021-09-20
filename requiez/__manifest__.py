@@ -1,6 +1,6 @@
 {
     "name": "Requiez Instance",
-    "author": "Vauxoo, Humanytek",
+    "author": "gflores",
     "summary": """
     All the necessary modules to auto install our service instance
     """,
