@@ -69,7 +69,7 @@
         "website_mass_mailing",
     ],
     "data": [
-        "data/chart_template.xml",
+        # "data/chart_template.xml",
         # Security
         # "security/ir.model.access.csv",
         "security/responsible_confirm_order_security.xml",
