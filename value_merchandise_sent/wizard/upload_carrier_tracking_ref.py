@@ -27,6 +27,7 @@ class UploadCarrierTracking(models.TransientModel):
 
     getted = fields.Boolean('Getted', default=False)
 
+    @api.multi
     def confirm(self):
         # function to send email with information of tracking to partner
         def send_tracking_ref(picking_id):

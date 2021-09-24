@@ -12,7 +12,7 @@
     'author': "gflores",
     'website': "https://www.gruporequiez.com",
     'category': 'Inventory',
-    'version': '0.0.1',
+    'version': '12.0.0.0.1',
     'license': "LGPL-3",
     'depends': [
         'product',
@@ -20,8 +20,6 @@
         'purchase'
     ],
     'data': [
-        # security
-        "security/ir.model.access.csv",
         # data
         'data/report_data.xml',
         # views
@@ -29,6 +27,7 @@
         # Reports
         'report/product_kardex_report_definition.xml',
         'report/product_kardex_report_templates.xml',
+
     ],
     'demo': [
     ],

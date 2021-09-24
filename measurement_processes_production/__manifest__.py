@@ -16,9 +16,10 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 ###################################################################################
+
 {
     'name': 'Measurement of processes in production',
-    'version': '0.0.1',
+    'version': '12.0.0.0.1',
     'summary': 'Measurement of processes in production',
     'author': 'gflores',
     'maintainer': 'gflores',
@@ -28,7 +29,6 @@
     'category': 'Inventory',
     'demo': [],
     'data': [
-        'security/ir.model.access.csv',
         'wizard/process_measurement_view.xml',
     ],
     'installable': True,

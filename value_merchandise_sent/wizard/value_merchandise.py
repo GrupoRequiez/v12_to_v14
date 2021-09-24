@@ -26,6 +26,7 @@ class ValueMerchandiseSent(models.TransientModel):
 
     getted = fields.Boolean('Getted', default=False)
 
+    @api.multi
     def get_csv_file(self):
 
         def get_merchandise_value(ids):

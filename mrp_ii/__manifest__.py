@@ -29,13 +29,11 @@
     'author': "Humanytek",
     'website': "http://www.humanytek.com",
     'category': 'Manufacturing',
-    'version': '0.0.1',
+    'version': '12.0.1.0.1',
     'depends': ['mrp_workorder', 'sale', 'product_compromise'],
     'data': [
-        # security
-        "security/ir.model.access.csv",
-        # views
         'view/mrp_ii_view.xml',
+        'view/stock_view.xml'
     ],
     'demo': [
     ],

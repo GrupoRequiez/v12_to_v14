@@ -21,4 +21,4 @@
 ###############################################################################
 
 from . import sale
-from . import account_move
+from . import account_invoice

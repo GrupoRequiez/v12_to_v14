@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+
 {
     'name': "Sale Order - Brand",
     'summary': """
@@ -32,7 +33,7 @@
     'depends': ['sale', 'product_brand', 'account'],
     'data': [
         'view/sale_view.xml',
-        'view/account_move_view.xml',
+        'view/account_invoice_view.xml',
     ],
     'demo': [
     ],

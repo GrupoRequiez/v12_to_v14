@@ -10,22 +10,22 @@ class SaleOrder(models.Model):
     _name = "sale.order"
     _inherit = 'sale.order'
 
-    type_id = fields.Many2one('sale.order.type', 'Type', required=False)
+    type_id = fields.Many2one('sale.order.type', 'Type')
 
 
 class SaleOrderLine(models.Model):
     _name = "sale.order.line"
     _inherit = ['sale.order.line', 'sale.order.observation']
 
-    def _prepare_invoice_line(self, **optional_values):
-        res = super(SaleOrderLine, self)._prepare_invoice_line(**optional_values)
+    @api.multi
+    def _prepare_invoice_line(self, qty):
+        res = super(SaleOrderLine, self)._prepare_invoice_line(qty)
         res['observation'] = self.observation
         return res
 
 
 class SaleOrderType(models.Model):
     _name = "sale.order.type"
-    _description = 'sale.order.type'
 
     name = fields.Char('Type', required=True)
     active = fields.Boolean(default=True)

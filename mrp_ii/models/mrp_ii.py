@@ -27,9 +27,8 @@ _logger = logging.getLogger(__name__)
 
 class MrpIi(models.TransientModel):
     _name = "mrp.ii"
-    _description = 'mrp.ii'
 
-    # @api.multi
+    @api.multi
     def calculate(self):
         bill_material_ii_obj = self.env['bill.material.ii']
         bill_material_ii_sale_obj = self.env['bill.material.ii.sale']
@@ -78,7 +77,7 @@ class MrpIi(models.TransientModel):
              ('company_id', '=', self.env.user.company_id.id)], limit=1)
         return stock_location.id
 
-    # @api.multi
+    @api.multi
     @api.onchange('product_id')
     def onchange_product_id(self):
         mrp_bom_obj = self.env['mrp.bom']
@@ -98,7 +97,6 @@ class MrpIi(models.TransientModel):
 
 class BillMaterialIi(models.TransientModel):
     _name = "bill.material.ii"
-    _description = 'bill.material.ii'
 
     mrp_ii_id = fields.Many2one('mrp.ii', 'MRP II')
     product_id = fields.Many2one('product.product', 'Product', readonly=True)
@@ -129,7 +127,7 @@ class BillMaterialIi(models.TransientModel):
     dis_product = fields.Float(
         'Availability Product', compute='_compute_dis_product', readonly=True)
 
-    # @api.multi
+    @api.multi
     def _compute_total_compromise_product(self):
         stock_move_obj = self.env['stock.move']
         product_compromise_obj = self.env['product.compromise']
@@ -149,7 +147,7 @@ class BillMaterialIi(models.TransientModel):
             record.total_compromise_product = sum([
                 product.qty_compromise for product in commited_products])
 
-    # @api.multi
+    @api.multi
     def _compute_total_reserved_product(self):
         stock_move_obj = self.env['stock.move']
         for record in self:
@@ -158,10 +156,11 @@ class BillMaterialIi(models.TransientModel):
                  ('state', 'in', [
                      'assigned', 'confirmed', 'partially_available']),
                  ('location_id', '=', record.mrp_ii_id.location_id.id)])
+
             record.total_reserved_product = sum([move.reserved_availability
                                                  for move in stock_moves])
 
-    # @api.multi
+    @api.multi
     def _compute_product_qty_product(self):
         quant_obj = self.env['stock.quant']
         for record in self:
@@ -169,11 +168,10 @@ class BillMaterialIi(models.TransientModel):
                 ('product_id', '=', record.product_id.id),
                 ('location_id', 'child_of', record.mrp_ii_id.location_id.id)],
                 ['product_id', 'quantity'], ['product_id'])
-            record.product_qty_product = 0
             if quant_data:
                 record.product_qty_product = quant_data[0].get('quantity', 0.0)
 
-    # @api.multi
+    @api.multi
     def _compute_product_incoming_qty(self):
         stock_move_obj = self.env['stock.move']
         for record in self:
@@ -183,29 +181,25 @@ class BillMaterialIi(models.TransientModel):
                 ('state', 'not in', ['cancel', 'done']),
                 ('location_dest_id', '=', record.mrp_ii_id.location_id.id)],
                 ['product_id', 'product_uom_qty'], ['product_id'])
-            record.product_incoming_qty = 0
             if stock_move_data:
                 record.product_incoming_qty = stock_move_data[0].get(
-                    'product_uom_qty', 0.0) or 0
+                    'product_uom_qty', 0.0)
 
-    # @api.multi
+    @api.multi
     def _compute_dis_product_in(self):
         for record in self:
-            record.dis_product_in = 0
             record.dis_product_in = record.product_incoming_qty - \
                 record.total_compromise_product
 
-    # @api.multi
+    @api.multi
     def _compute_dis_product(self):
         for record in self:
-            record.dis_product = 0
             record.dis_product = record.product_qty_product - \
                 record.total_reserved_product
 
 
 class BillMaterialIiSale(models.TransientModel):
     _name = "bill.material.ii.sale"
-    _description = 'bill.material.ii.sale'
 
     bill_material_ii_id = fields.Many2one('bill.material.ii', 'MRP II')
     move_id = fields.Many2one('stock.move', 'Move', required=True)
@@ -224,7 +218,6 @@ class BillMaterialIiSale(models.TransientModel):
 
 class BillMaterialIiPurchase(models.TransientModel):
     _name = "bill.material.ii.purchase"
-    _description = 'bill.material.ii.purchase'
 
     bill_material_ii_id = fields.Many2one('bill.material.ii', 'MRP II')
     move_id = fields.Many2one('stock.move', 'Move', required=True)
@@ -244,7 +237,7 @@ class BillMaterialIiPurchase(models.TransientModel):
         related='move_in_id.picking_id.origin', string='Purchase Order',
         readonly=True, store=False)
 
-    # @api.multi
+    @api.multi
     def _compute_compromise_product(self):
         product_compromise_obj = self.env['product.compromise']
         for record in self:

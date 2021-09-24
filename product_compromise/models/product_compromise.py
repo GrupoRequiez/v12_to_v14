@@ -6,7 +6,6 @@ from odoo import fields, models
 
 class ProductCompromise(models.Model):
     _name = "product.compromise"
-    _description = 'product.compromise'
 
     qty_compromise = fields.Float('Compromise quantity')
     stock_move_in_id = fields.Many2one('stock.move', 'Incoming products')

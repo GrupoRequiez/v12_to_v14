@@ -29,14 +29,17 @@ class AccountInvoiceReport(models.Model):
     _name = "account.invoice.report"
     _inherit = 'account.invoice.report'
 
+    brand = fields.Char(string="Brand",
+                            readonly=True,
+                            )
+
     def _from(self):
         from_str = super(AccountInvoiceReport, self)._from()
         from_str += """
-        LEFT JOIN product_brand pb ON pb.id = template.product_brand_id
+        left JOIN product_brand pb ON pb.id = pt.product_brand_id
         """
         return from_str
 
-    @api.model
     def _group_by(self):
         group_by_str = super(AccountInvoiceReport, self)._group_by()
         group_by_str += """
@@ -44,7 +47,6 @@ class AccountInvoiceReport(models.Model):
         """
         return group_by_str
 
-    @api.model
     def _sub_select(self):
         sub_select_str = super(AccountInvoiceReport, self)._sub_select()
         sub_select_str += """
@@ -52,10 +54,9 @@ class AccountInvoiceReport(models.Model):
         """
         return sub_select_str
 
-    @api.model
     def _select(self):
         select_str = super(AccountInvoiceReport, self)._select()
         select_str += """
-        , pb.name
+        , sub.brand
         """
         return select_str

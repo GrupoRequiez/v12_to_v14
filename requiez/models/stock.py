@@ -6,7 +6,6 @@ from odoo import models
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
-    _name = 'stock.move'
 
     def _action_assign(self):
         if self.env.context.get('from_planned'):

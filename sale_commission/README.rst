@@ -78,7 +78,7 @@ Here it can create or view the seller commissions.
 
 The following is shown for each invoice found:
 
-- Invoice name.
+- Invoice number.
 - Client.
 - Invoice date.
 - Payment date.
